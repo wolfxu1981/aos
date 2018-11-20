@@ -1,6 +1,6 @@
 spring:
     datasource:
-        url: jdbc:mysql://localhost:3306/aodb
+        url: jdbc:mysql://localhost:3306/aodb?useUnicode=true&characterEncoding=utf8
         username: dev
         password: devdev
         driver-class-name: com.mysql.jdbc.Driver

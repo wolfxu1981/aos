@@ -20,7 +20,7 @@ import com.hb.wh.ts.zx.domain.listeners.AirportListener;
 @DynamicUpdate
 public class Airport implements Serializable{
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="t_id")
 	private Long id;
 	

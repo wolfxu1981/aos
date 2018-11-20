@@ -13,7 +13,8 @@ import com.hb.wh.ts.zx.domain.Airport;
 @Repository
 public interface AirportDao extends JpaRepository<Airport, Long>{
 	
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+   
 	Optional<Airport> findById(Long id);
+    
     
 }

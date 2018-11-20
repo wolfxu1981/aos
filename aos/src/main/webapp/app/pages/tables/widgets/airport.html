@@ -1,0 +1,74 @@
+
+  <div class="add-row-editable-table">
+   <button class="btn btn-primary" ng-click="addUser(rowform)">添加机场</button>
+   <span ng-show="error"><font color='RED'>{{errormessage}}</font></span>
+  </div>
+  <table class="table table-striped" st-pipe="callserver" st-table="airportsdisplay" st-safe-src="airports">
+     <thead>
+    <tr class="sortable">
+      <th st-sort="alias">机场名称</th>
+      <th st-sort="code">代码</th>
+      <th st-sort="iata">IATA</th>
+      <th st-sort="icao">ICAO</th>
+      <th st-sort="name">机场全称</th>
+      <th st-sort="city">所属城市</th>
+      <th st-sort="country">所属国家</th>
+      <th st-sort="countrytype">机场类型</th>
+      <th width="140px;"></th>
+    </tr>
+    <tr>
+      <th><input st-search="alias" placeholder="根据机场简称" class="input-sm form-control search-input"
+                 type="search"/></th>
+      <th><input st-search="code" placeholder="" class="input-sm form-control search-input"
+                 type="search"/></th>
+      <th><input st-search="iata" placeholder="" class="input-sm form-control search-input"
+                 type="search"/></th>
+      <th><input st-search="icao" placeholder="" class="input-sm form-control search-input"
+                 type="search"/></th>
+      <th><input st-search="name" placeholder="" class="input-sm form-control search-input" type="search"/>
+      </th>
+      <th><input st-search="city" placeholder="" class="input-sm form-control search-input" type="search"/>
+      </th>
+      <th><input st-search="country" placeholder="" class="input-sm form-control search-input" type="search"/>
+      </th>
+      <th><input st-search="countrytype" placeholder="" class="input-sm form-control search-input" type="search"/>
+      </th>
+      <th>
+      </th>
+    </tr>
+   </thead>
+     <tbody>
+    <tr ng-repeat="item in airportsdisplay" st-select-row="row" st-select-mode="multiple">
+      <td><span editable-text="item.alias" e-name="alias" e-form="rowform" onbeforesave="validate($data)">{{item.alias}}</span></td>
+      <td><span editable-text="item.code" e-name="code" e-form="rowform" onbeforesave="validate($data)">{{item.code}}</span></td>
+      <td><span editable-text="item.iata" e-name="iata" e-form="rowform" onbeforesave="validate($data)">{{item.iata}}</span></td>
+      <td><span editable-text="item.icao" e-name="icao" e-form="rowform" onbeforesave="validate($data)">{{item.icao}}</span></td>
+      <td><span editable-text="item.name" e-name="name" e-form="rowform" onbeforesave="validate($data)">{{item.name}}</span></td>
+      <td><span editable-text="item.city" e-name="city" e-form="rowform" onbeforesave="validate($data)">{{item.city}}</span></td>
+      <td><span editable-text="item.country" e-name="country" e-form="rowform" onbeforesave="validate($data)">{{item.country}}</span></td>
+      <td><span editable-text="item.countrytype" e-name="countrytype" e-form="rowform" onbeforesave="validate($data)">{{item.countrytype}}</span></td>
+      <td>
+      <form editable-form name="rowform" ng-show="rowform.$visible" onbeforesave="save($data,item)" class="form-buttons form-inline"
+            shown="inserted == item">
+        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary editable-table-button btn-xs" >
+          保存
+        </button> <button type="button" ng-disabled="rowform.$waiting" ng-click="cancel(rowform,item,$index)" class="btn btn-default editable-table-button btn-xs">
+          取消
+        </button>
+      </form>
+      <div class="buttons" ng-show="!rowform.$visible">
+        <button class="btn btn-primary editable-table-button btn-xs" ng-click="rowform.$show()">编辑</button>
+        <button class="btn btn-danger editable-table-button btn-xs" ng-click="removeUser($index)">删除</button>
+      </div>
+    </td>
+    </tr>
+    </tbody>
+   <tfoot>
+    <tr>
+      <td colspan="9" class="text-center">
+        <div st-pagination="" st-items-by-page="2" st-displayed-pages="5"></div>
+      </td>
+    </tr>
+    </tfoot>
+   
+  </table>

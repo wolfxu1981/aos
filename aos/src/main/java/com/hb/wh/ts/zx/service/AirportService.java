@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -39,7 +43,6 @@ public class AirportService {
 	//外部系统通过XML或者JSON方式进行封装处理的
 	public boolean updateAirport(String data) {
 		ini();
-	
 		Optional<Airport> airport = airportDao.findById(1L);
 		if(!pros.isEmpty()) {
 			//这里根据实际的需要和处理属性的优先级的字段
@@ -96,11 +99,28 @@ public class AirportService {
 	
 	//内部系统本身，默认权限是最高的，不需要进行优先级的校验
 	public boolean updateAirport(Airport airport) {
-		return true;
+		try {
+			airportDao.saveAndFlush(airport);
+			return true;
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 	
 	public List<Airport> findAll(){
 		return airportDao.findAll();
+	}
+	
+	public Page<Airport> findAll(Airport airport,Pageable pageable){
+		
+		ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(StringMatcher.CONTAINING);
+		
+		return airportDao.findAll(Example.of(airport,matcher) ,pageable);
+	}
+	
+	public Airport findById(Long id) {
+		return airportDao.findById(id).get();
 	}
 	
 	public Long total() {
